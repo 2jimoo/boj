@@ -1,3 +1,5 @@
+package retry;
+
 import java.util.Scanner;
 
 public class Solution_2482 {

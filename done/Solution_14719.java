@@ -1,3 +1,5 @@
+package done;
+
 import java.util.Scanner;
 
 public class Solution_14719 {
