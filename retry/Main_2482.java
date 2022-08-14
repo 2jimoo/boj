@@ -2,7 +2,7 @@ package retry;
 
 import java.util.Scanner;
 
-public class Solution_2482 {
+public class Main_2482 {
 
     static int mod =1000000003;
     public void solution1(int n, int k){
