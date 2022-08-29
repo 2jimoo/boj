@@ -34,13 +34,7 @@ public class Main_2240 {
                 if (j == 0) {
                     bp[i][0] = tree[i] == 1 ? bp[i - 1][0] + 1 : bp[i - 1][0];
                 } else {
-                    if (j % 2 == 0) {
-                        //짝수번 이동했으면 1번
-                        bp[i][j] = tree[i] == 1 ? Math.max(bp[i - 1][j - 1], bp[i - 1][j]) + 1 : bp[i - 1][j];
-                    } else {
-                        //홀수번 이동 2번
-                        bp[i][j] = tree[i] == 2 ? Math.max(bp[i - 1][j - 1], bp[i - 1][j]) + 1 : bp[i - 1][j];
-                    }
+                    bp[i][j] = tree[i] == 1 ? Math.max(bp[i - 1][j - 1], bp[i - 1][j]) + 1 : bp[i - 1][j];
                 }
             }
         }
