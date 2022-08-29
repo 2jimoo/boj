@@ -54,7 +54,7 @@ public class Main_6568 {
         System.out.println(stringBuilder.toString());
     }
 
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String m;
         while (true) {
