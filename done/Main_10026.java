@@ -10,7 +10,7 @@ public class Main_10026 {
     static int N;
     static char[][] map;
 
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N= Integer.parseInt(br.readLine());
 
