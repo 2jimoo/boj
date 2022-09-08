@@ -1,4 +1,4 @@
-package progress;
+package done;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class Main_1701 {
         }
         return ans;
     }
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String p = br.readLine();
 //        int max=0;
