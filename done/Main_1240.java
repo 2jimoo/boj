@@ -1,4 +1,4 @@
-package progress;
+package done;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,16 +26,16 @@ public class Main_1240 {
 
         dist = new int[V + 1][V + 1];
 
-        adj = new ArrayList[V+1];
+        adj = new ArrayList[V + 1];
         for (int i = 1; i <= V; i++)
             adj[i] = new ArrayList<>();
-        for(int i=0; i< V-1; i++){
+        for (int i = 0; i < V - 1; i++) {
             stringTokenizer = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(stringTokenizer.nextToken());
             int v = Integer.parseInt(stringTokenizer.nextToken());
             int w = Integer.parseInt(stringTokenizer.nextToken());
-            adj[u].add(new Edge(v,w));
-            adj[v].add(new Edge(u,w));
+            adj[u].add(new Edge(v, w));
+            adj[v].add(new Edge(u, w));
         }
 
         for (int i = 0; i < V + 1; i++) {
@@ -46,26 +46,26 @@ public class Main_1240 {
 
     public static void dijkstra(int start) {
         PriorityQueue<Edge> priorityQueue = new PriorityQueue<>();
-        priorityQueue.add(new Edge(start,0));
+        priorityQueue.add(new Edge(start, 0));
         dist[start][start] = 0;
-        check= new boolean[V+1];
+        check = new boolean[V + 1];
         while (!priorityQueue.isEmpty()) {
             Edge edge = priorityQueue.poll();
             int destination = edge.destination;
-            if(check[destination])
+            if (check[destination])
                 continue;
             else
                 check[edge.destination] = true;
             for (Edge next : adj[destination]) {
                 if (dist[start][next.destination] >= dist[start][destination] + next.weight) {
                     dist[start][next.destination] = dist[start][destination] + next.weight;
-                    priorityQueue.add(new Edge(next.destination,dist[start][next.destination]));
+                    priorityQueue.add(new Edge(next.destination, dist[start][next.destination]));
                 }
             }
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
         init();
         for (int i = 1; i <= V; i++)
             dijkstra(i);
