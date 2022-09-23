@@ -75,7 +75,7 @@ public class Main_1277 {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
         init();
         dijkstra();
         System.out.println((int) (dist[n] * 1000));
