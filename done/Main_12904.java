@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class Main_12904 {
 
-    public void main(String[] args) throws IOException {
+    public void main() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String S = br.readLine();
         String T = br.readLine();
