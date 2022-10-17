@@ -1,14 +1,11 @@
-package progress;
+package done;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
-public class Main_1525 {
+public class Main_1525_astar {
     //https://www.acmicpc.net/problem/1525
     //https://www.secmem.org/blog/2020/04/19/astar/
     //OPEN은 앞으로 탐색해야 할 노드들이 담긴 priority queue, CLOSED는 탐색이 완료된 노드들이 담긴 set입니다.
@@ -18,14 +15,15 @@ public class Main_1525 {
     //그 외의 경우에는 해당 노드를 OPEN에 추가하여준 뒤, g값을 업데이트해줍니다.
 
     static int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-    static Map<Integer, Info> map = new HashMap<>();
-    static PriorityQueue<Info> pq = new PriorityQueue<>((o1, o2) -> -Integer.compare(o1.f, o2.f));
+    static Map<Integer, Node> map = new HashMap<>();
+    //default min heap
+    static PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o.f));
 
     public static int hash(int[][] board) {
         int state = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                state = (state << 3) + board[i][j];
+                state = state * 9 + board[i][j];
             }
         }
         return state;
@@ -37,8 +35,8 @@ public class Main_1525 {
             for (int j = 0; j < 3; ++j) {
                 if (board[i][j] != 0) {
                     int t = board[i][j] - 1;
-                    int ii = t / 4;
-                    int jj = t % 4;
+                    int ii = t / 3;
+                    int jj = t % 3;
                     int dist = Math.abs(ii - i) + Math.abs(jj - j);
                     ret += dist * dist;
                 }
@@ -47,12 +45,13 @@ public class Main_1525 {
         return ret;
     }
 
-    public static void main(String[] args) throws IOException {
-        Info start = new Info();
+    public void main(String[] args) throws IOException {
+        Node start = new Node();
         int target = hash(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}});
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer;
+
         for (int i = 0; i < 3; i++) {
             stringTokenizer = new StringTokenizer(br.readLine());
             for (int j = 0; j < 3; j++) {
@@ -62,15 +61,15 @@ public class Main_1525 {
         start.g = 0;
         start.h = heuristic(start.board);
         start.f = start.g + start.h;
-        start.h = hash(start.board);
-        map.put(start.h, start);
+        start.hash = hash(start.board);
+        map.put(start.hash, start);
         pq.add(start);
 
         int answer = -1;
         while (!pq.isEmpty() && answer == -1) {
-            Info cur = pq.poll();
-            if (map.get(cur.hash).f < cur.f) continue;
-            if (cur.hash == target) {
+            Node cur = pq.poll();
+            if (map.containsKey(cur.hash) && map.get(cur.hash).f < cur.f) continue;
+            if (cur.hash==target) {
                 answer = cur.g;
                 break;
             }
@@ -89,9 +88,9 @@ public class Main_1525 {
                 int newZeroY = dir[i][0] + zeroY, newZeroX = dir[i][1] + zeroX;
                 if (newZeroY < 0 || newZeroY >= 3 || newZeroX < 0 || newZeroX >= 3) continue;
 
-                Info next = new Info();
-                //객체 아니라 primitive 참조라서 deep copy 되나...?
-                next.board = cur.board;
+                Node next = new Node();
+                for (int r = 0; r < 3; r++)
+                    System.arraycopy(cur.board[r], 0, next.board[r], 0, 3);
                 next.board[zeroY][zeroX] = next.board[newZeroY][newZeroX];
                 next.board[newZeroY][newZeroX] = 0;
 
@@ -101,7 +100,7 @@ public class Main_1525 {
 
                 next.hash = hash(next.board);
 
-                if (next.hash == target) {
+                if (next.hash==target) {
                     answer = next.g;
                     break;
                 }
@@ -115,9 +114,8 @@ public class Main_1525 {
         System.out.println(answer);
     }
 
-    static class Info {
-        int f, g, h;
-        int hash;
-        int[][] board;
+    static class Node {
+        int f, g, h, hash;
+        int[][] board= new int[3][3];;
     }
 }
